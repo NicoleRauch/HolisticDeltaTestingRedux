@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "npm run typecheck && npx jest"
+  },
+  "dependencies": {
+    "immutable": "4.0.0-rc.12",
+    "jest": "26.2.2",
+    "lens.ts": "0.5.1",
+    "redux": "4.0.5",
+    "ts-jest": "26.1.4",
+    "typescript": "3.9.7"
+  }
+}
