@@ -2,25 +2,15 @@ import { Action } from "redux";
 import * as I from "immutable"
 
 import { createReducer } from "./createReducer";
-import { Customers } from "./types";
+import { Customers, Customer } from "./types";
+import { ProductsActions, ProductWasSold } from "./productsReducer";
 
 
 export const CUSTOMERS_INITIAL_STATE: Customers = I.Map();
 
 export enum CustomersActions {
-    CUSTOMER_WAS_REGISTERED = "CUSTOMER_WAS_REGISTERED",
     CUSTOMER_WAS_REMOVED = "CUSTOMER_WAS_REMOVED"
 }
-
-export interface CustomerWasRegistered extends Action {
-    type: CustomersActions.CUSTOMER_WAS_REGISTERED,
-    name: string
-}
-
-export const registerCustomer = (name: string): CustomerWasRegistered => ({
-    type: CustomersActions.CUSTOMER_WAS_REGISTERED,
-    name
-})
 
 export interface CustomerWasRemoved extends Action {
     type: CustomersActions.CUSTOMER_WAS_REMOVED,
@@ -33,10 +23,10 @@ export const removeCustomer = (name: string): CustomerWasRemoved => ({
 })
 
 export default createReducer<Customers>(CUSTOMERS_INITIAL_STATE, {
-    [CustomersActions.CUSTOMER_WAS_REGISTERED]: (state: Customers, { name }: CustomerWasRegistered) =>
-        state.has(name) ?
-            state
-            : state.set(name, { name, bought: [] }),
     [CustomersActions.CUSTOMER_WAS_REMOVED]: (state: Customers, { name }: CustomerWasRemoved) =>
-        state.remove(name)
+        state.remove(name),
+    [ProductsActions.PRODUCT_WAS_SOLD]: (state: Customers, { productName, customer }: ProductWasSold) =>
+        state.update(customer.name,
+            { name: customer.name, bought: [] },
+            (customer: Customer) => ({ ...customer, bought: customer.bought.concat(productName) }))
 });
