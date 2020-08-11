@@ -1,27 +1,25 @@
 import * as I from "immutable";
 
-export type User = {
-    firstName: string
-    lastName: string
-}
-export type Users = User[]
-
-export type ProductId = string;
-export type Product = {
-    id: ProductId
+export type Customer = {
     name: string
-    description: string
-    image: string
+    bought: Product[]
 }
+
+export type Customers = I.Map<string, Customer>
+
+export type Product = { name: string };
+
+export type ProductList = Product[]
+
+export type Currency = "€" | "$"
 
 export type Config = {
-
+    itemsPerPage: number,
+    currency: Currency
 }
 
-export type Products = I.Map<ProductId, Product>;
-
 export type StoreState = {
-    users: Users,
-    products: Products,
+    customers: Customers,
+    products: ProductList,
     config: Config
 }

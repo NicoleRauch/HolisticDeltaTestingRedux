@@ -1,9 +1,11 @@
-import {combineReducers} from "redux";
-import {StoreState} from "./types";
+import { combineReducers } from "redux";
+import { StoreState } from "./types";
+
+import customers from "./customersReducer"
 
 
 export default combineReducers<StoreState>({
-    users,
+    customers,
     products,
     config
 });
